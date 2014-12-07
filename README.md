@@ -1,7 +1,5 @@
-ka-interview
+Khan Academy "Infection" Model
 ============
-
-##Khan Academy Limited Infection Interview
 
 ## Run me
 
@@ -15,8 +13,9 @@ Users are represented by the User class in user.py. Users are the nodes / vertic
 
 ## Part II: Limited Infection
 
+The first way to limit spread is simply to choose not to infect users with many coaches, students or both, containing the spread by infecting relatively isolated nodes.
 
-Thoughts on ways to limit spread: 
+A slightly more nuanced approach with tradeoffs:
 
 If we were testing a new feature through A-B testing we would want equal proportions of users to see site A and site B. Ways to limit spread of new site infection: stop at "dead nodes"
 
@@ -27,7 +26,9 @@ Given that the objective in the limited infection scheme is to minimize the risk
 Data wishlist:
 1. Total number of minutes spent on KA within the last X days/weeks/months for any given student-coach pair (to gauge whether the pair is active - targeting inactive users as stopping points for the infection minimizes the risk of a site version mismatch). This activity window could be determined by the average length of an AB test.
 
-2. Aggregate number of logins
+2. Aggregate number of logins for a coach-student pair.
+
+Logins * minutes spent on KA
 
 2. Interactions: weight nodes by total hours spent together (affinity)
 
