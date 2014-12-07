@@ -9,17 +9,19 @@ I've described my approach to the infection problem below. During the process of
 
 ## Part I: Infect
 
-Users are represented by the User class in user.py. Users are the nodes / vertices of coaching graphs (Graph class in user.py). The graph can be constructed from an edge list (list of coach-student liaisons)
+Users are represented by the User class in `user.py`. Users are the nodes / vertices of coaching graphs (Graph class in `user.py`). The graph can be constructed from an edge list (list of coach-student liaisons). For testing and demo purposes, I made a dummy edge list file and placed it in `edges.csv`
 
 ## Part II: Limited Infection
 
-The first way to limit spread is simply to choose not to infect users with many coaches, students or both, containing the spread by infecting relatively isolated nodes.
+The first way to limit spread is simply to choose not to infect users with many coaches, students or both, restricting release of the B version relatively isolated nodes.
 
-A slightly more nuanced approach with tradeoffs:
-
-If we were testing a new feature through A-B testing we would want equal proportions of users to see site A and site B. Ways to limit spread of new site infection: stop at "dead nodes"
+However, if we were testing a new feature through A-B testing we might want equal proportions of users to see site A and site B, and limiting to isolated nodes is unrealistic (a tradeoff, however, is that infection-based sampling compromises the integrity of the A-B test because it is no longer truly random.) A slightly more nuanced approach with the tradeoff that mismatches may sometimes occur would be to stop the spread at "dead nodes"
 
 Given that the objective in the limited infection scheme is to minimize the risk of a coach-student pair seeing different sites, I implemented "infection containment" using edge weighting. 
+
+## Scalability & Questions
+
+KA is estimated to have 6 million users a month - what proportion of these are classroom-based, lone users
 
 ## Extras
 
@@ -29,6 +31,8 @@ Data wishlist:
 2. Aggregate number of logins for a coach-student pair.
 
 Logins * minutes spent on KA
+
+(Many logins but short visits are not as strong of an indicator of engagement and volume of use.)
 
 2. Interactions: weight nodes by total hours spent together (affinity)
 
