@@ -37,5 +37,6 @@ def build_graph():
 if __name__ == '__main__':
     g = build_graph()
     print "Users: ", [u for u in g.users]
+    first_user = raw_input("Enter the name of the user to infect first?")
     print "Spreading the infection!"
-    infect(g, 'Tom')
+    infect(g, first_user)
