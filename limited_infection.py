@@ -29,7 +29,7 @@ def build_graph(edge_file):
     with open(edge_file) as f:
         lines = f.readlines()
         for line in lines:
-            line = line.strip().replace(' ','').split(',')
+            line = line.strip().split(',')
             g.add_edge(str(line[0]), str(line[1]),1)
     return g
 
