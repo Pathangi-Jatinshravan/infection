@@ -1,5 +1,7 @@
 from user import User, Graph
 from Queue import Queue
+import networkx as nx
+import matplotlib.pyplot as plt
 
 def infect(g, start):
     '''
@@ -35,6 +37,29 @@ def build_graph(edge_file):
             g.add_edge(str(line[0]), str(line[1]),1)
     return g
 
+def visualize(list):
+    '''
+    INPUT: Homespun Graph object (defined in user.py)
+    OUTPUT: image of network (PNG)
+    '''
+    G = nx.read_edgelist(list, delimiter=',')
+    plt.figure(figsize=(6,4))
+    nx.draw(G)
+    plt.savefig('network_infection.png',format='PNG')
+    plt.show()
+
+    # plt.figure(figsize=(8,8))
+    # nx.draw_networkx_edges(G,pos,nodelist=[ncenter],alpha=0.4)
+    # nx.draw_networkx_nodes(G,pos,nodelist=p.keys(),
+    # node_size=80,
+    # node_color=p.values(),
+    # cmap=plt.cm.Reds_r)
+
+    # plt.xlim(-0.05,1.05)
+    # plt.ylim(-0.05,1.05)
+    # plt.axis('off')
+    # plt.savefig('random_geometric_graph.png')
+    # plt.show()
 
 if __name__ == '__main__':
     g = build_graph('edges.csv')
@@ -49,3 +74,4 @@ if __name__ == '__main__':
     print "Spreading the infection!"
     print "\n"
     infect(g, first_user)
+    visualize('edges.csv')
