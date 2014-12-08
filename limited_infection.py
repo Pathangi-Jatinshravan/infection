@@ -18,7 +18,7 @@ def infect(g, start):
             for neighbor in g.get_neighbors(node):
                 q.put(neighbor)
 
-def build_graph():
+def build_graph(edge_file):
     '''
     INPUT: None
     OUTPUT: Graph object
@@ -26,17 +26,17 @@ def build_graph():
     Constructs a graph object edge by edge
     '''
     g = Graph()
-    g.add_edge('Tom', 'Mary', 4)
-    g.add_edge('Tom', 'Jen', 1)
-    g.add_edge('Mary', 'Jerry', 8)
-    g.add_edge('Jen', 'Fido', 7)
-    g.add_edge('Lassie', 'Jen', 2)
+    with open(edge_file) as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.strip().replace(' ','').split(',')
+            g.add_edge(str(line[0]), str(line[1]),1)
     return g
 
 
 if __name__ == '__main__':
-    g = build_graph()
+    g = build_graph('edges.csv')
     print "Users: ", [u for u in g.users]
-    first_user = raw_input("Enter the name of the user to infect first?")
+    first_user = raw_input("Enter the name of the user to infect first ")
     print "Spreading the infection!"
     infect(g, first_user)
