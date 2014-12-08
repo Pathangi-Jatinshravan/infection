@@ -5,7 +5,7 @@ class User:
     '''
     def __init__(self, name):
         self.name = name
-        #self.site_version = version
+        self.site_version = None
         self.neighbors = {}
 
     def add_neighbor(self, neighbor, weight):

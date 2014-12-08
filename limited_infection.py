@@ -40,7 +40,7 @@ if __name__ == '__main__':
     print "Users: ", users
     first_user = raw_input("Please enter the name of the user to infect first: ")
     while len(first_user)==0 or first_user not in users:
-        print "Oops, that's not a valid user \n. Please choose from the following users: ", users
+        print "Oops, that's not a valid user. \nPlease choose from the following users: ", users
         print "\n"    
         first_user = raw_input("Please enter the name of the user to infect first: ")
     print "\n"

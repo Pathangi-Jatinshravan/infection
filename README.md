@@ -6,6 +6,7 @@ Khan Academy "Infection" Model
 1. If you do not already have `networkx`, please install using `pip install networkx`.
 2. Run total infection with `python total_infection.py`. You will see a (fake) list of users and be prompted for the name of the first infection.
 3. Run limited infection with `python limited_infection.py`
+4. Change coach relations in `edges.csv` and rerun for fun, ad infinitum.
 
 ## EDA
 
@@ -43,7 +44,7 @@ Logins * minutes spent on KA
 
 (Many logins but short visits are not as strong of an indicator of engagement and volume of use.)
 
-3. Interactions: weight edges by total hours spent *together* (affinity). That way, if two users are active independently but use the site together infrequently, it might be okay to stop the infection from spreading at that node. (Fraction of total time spent on site during which user is working on an assigned playlist.)
+3. Interactions: weight edges by total hours spent *together* (affinity). That way, if two users are active independently but use the site together infrequently, it might be okay to stop the infection from spreading across that edge. (Fraction of total time spent on site during which user is working on an assigned playlist.)
 
 4. Should playlist length factor into edge weighting?
 

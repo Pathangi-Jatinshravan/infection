@@ -1,6 +1,8 @@
 from user import User, Graph
 from Queue import Queue, LifoQueue
-
+import networkx as nx
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def infect(g, start):
     '''
@@ -32,6 +34,15 @@ def build_graph():
     g.add_edge('Jen', 'Fido', 1)
     g.add_edge('Lassie', 'Jen', 1)
     return g
+
+def visualize(list):
+    '''
+    INPUT: Homespun Graph object (defined in user.py)
+    OUTPUT: image of network (PNG)
+    '''
+    G = nx.read_edgelist(list, delimiter=' ', create_using=nx.DiGraph())
+    plt.figure(figsize(6,4))
+    nx.draw(G)
 
 
 if __name__ == '__main__':
