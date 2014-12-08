@@ -1,5 +1,5 @@
 from user import User, Graph
-from Queue import Queue, LifoQueue
+from Queue import Queue
 
 
 def infect(g, start):
@@ -13,7 +13,7 @@ def infect(g, start):
     while not q.empty():
         node = q.get()
         if node not in v_set:
-            print "Just infected ", node
+            print "Just infected", node
             v_set.add(node)
             for neighbor in g.get_neighbors(node):
                 q.put(neighbor)
@@ -36,7 +36,14 @@ def build_graph(edge_file):
 
 if __name__ == '__main__':
     g = build_graph('edges.csv')
-    print "Users: ", [u for u in g.users]
-    first_user = raw_input("Enter the name of the user to infect first ")
+    users = g.users.keys()
+    print "Users: ", users
+    first_user = raw_input("Please enter the name of the user to infect first: ")
+    while len(first_user)==0 or first_user not in users:
+        print "Oops, that's not a valid user \n. Please choose from the following users: ", users
+        print "\n"    
+        first_user = raw_input("Please enter the name of the user to infect first: ")
+    print "\n"
     print "Spreading the infection!"
+    print "\n"
     infect(g, first_user)
