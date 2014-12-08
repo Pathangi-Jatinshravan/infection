@@ -9,7 +9,7 @@ Khan Academy "Infection" Model
 
 3. Run limited infection with `python limited_infection.py`.
 
-4. Modify or append coaching relations in `edges.csv` and rerun for fun, __ad infinitum__.
+4. Modify or append coaching relations in `edges.csv` and rerun for fun, *ad infinitum*.
 
 ## Summary
 
@@ -30,7 +30,9 @@ Users are represented by the User class in `user.py`. Users are the nodes / vert
 
 The first way to limit spread is simply to choose not to infect users with many coaches, students or both, restricting release of the B version relatively isolated nodes (the threshold for this is subjective.)
 
-However, if we were testing a new feature through A-B testing we might want equal proportions of users to see site A and site B, and limiting to isolated nodes is unrealistic (a tradeoff, however, is that infection-based sampling compromises the integrity of the A-B test because it is no longer truly random.) A slightly more nuanced approach with the tradeoff that mismatches may sometimes occur would be to stop the spread at "dead nodes"
+However, if we were testing a new feature through A-B testing we might want equal proportions of users to see site A and site B, and limiting to isolated nodes is unrealistic (a tradeoff, however, is that infection-based sampling compromises the integrity of the A-B test because it is no longer truly random.)
+
+A slightly more nuanced approach with the tradeoff that mismatches may sometimes occur would be to stop the spread at "dead nodes"
 
 Given that the objective in the limited infection scheme is to minimize (but perhaps not eliminate) the risk of a coach-student pair seeing different sites, I implemented "infection containment" in `limited_infection.py`using edge weighting. 
 
@@ -45,9 +47,8 @@ Logins * minutes spent on KA
 
 (Many logins but short visits are not as strong of an indicator of engagement and volume of use.)
 
--Interactions: weight edges by total hours spent *together* (affinity). That way, if two users are active independently but use the site together infrequently, it might be okay to stop the infection from spreading across that edge. (Fraction of total time spent on site during which user is working on an assigned playlist.)
+-Interactions: weight edges by total hours spent *together* (affinity). That way, if two users are active independently but use the site together infrequently, it might be okay to stop the infection from spreading across that edge. (Fraction of total time spent on site during which user is working on an assigned playlist from a given coach.)
 
--Should playlist length factor into edge weighting?
 
 I've written a function to transform this hypothetical data into an edge list with weights.
 

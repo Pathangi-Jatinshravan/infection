@@ -47,6 +47,7 @@ def visualize(list, infected):
     plt.figure(figsize=(6,6))
     values = [1.0 if str(node) in infected else 0.0 for node in G.nodes()]
     nx.draw(G, node_size=500, cmap=plt.get_cmap('rainbow'), node_color=values, font_size=6, font_family='sans-serif')
+    plt.legend()
     plt.savefig('network_infection.png',format='PNG')
 
 
