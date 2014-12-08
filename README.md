@@ -1,4 +1,4 @@
-Khan Academy "Infection" Model
+Khan Academy Infection Model
 ============
 
 ## Instructions
@@ -37,7 +37,7 @@ A slightly more nuanced approach would be to stop the spread at "dead nodes" (wi
 Given that the objective in the limited infection scheme is to minimize (but perhaps not eliminate) the risk of a coach-student pair seeing different sites, I implemented "infection containment" in `limited_infection.py` using edge weighting. 
 
 
-### Edge weighting scheme:
+#### Edge weighting scheme:
 
 -Total number of minutes spent on KA within the last X days/weeks/months for any given student-coach pair (to gauge whether the pair is active - targeting inactive users as stopping points for the infection minimizes the risk of a site version mismatch). This activity window could be determined by the average length of an AB test.
 
