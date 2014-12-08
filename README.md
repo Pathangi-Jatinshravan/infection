@@ -1,14 +1,19 @@
 Khan Academy "Infection" Model
 ============
 
-## Run me
+## Instructions
 
-1. If you do not already have `networkx`, please install using `pip install networkx`.
-2. Run total infection with `python total_infection.py`. You will see a (fake) list of users and be prompted for the name of the first infection.
-3. Run limited infection with `python limited_infection.py`
-4. Change coach relations in `edges.csv` and rerun for fun, ad infinitum.
+1. Dependencies: If you do not already have `networkx` and the latest `matplotlib`, please install with `pip install networkx` and `pip install --upgrade matplotlib`.
 
-## EDA
+2. Run total infection `python total_infection.py`. You will see a (fake) list of users and be prompted for the name of the first infection.
+
+3. Run limited infection with `python limited_infection.py`.
+
+4. Modify or append coaching relations in `edges.csv` and rerun for fun, ad infinitum.
+
+## EDA and Questions
+
+KA is estimated to have 6 million users a month - what proportion of these are classroom-based vs. lone users.
 
 Is the coaching network 'small-world' or 'scale free'? Given a dataset, I would first plot a histogram of node degree (number of links) across all the entire graph of users in the sample and determine whether the distribution was closer to a bell curve or a power law. This result would inform design choices for the limited infection procedure.
 
@@ -30,7 +35,6 @@ Given that the objective in the limited infection scheme is to minimize the risk
 
 ## Scalability & Questions
 
-KA is estimated to have 6 million users a month - what proportion of these are classroom-based, lone users
 
 ## Extras
 
