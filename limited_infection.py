@@ -6,21 +6,22 @@ import matplotlib.pyplot as plt
 def infect(g, start):
     '''
     INPUTS: pre-infection Graph object, User object
-    OUTPUT: list of 'infected' users, limited by edge weighting (see README)
+    OUTPUT: set of 'infected' users, limited by edge weighting (see README)
     
     Infects connected portion of user graph with new site.
     '''
     q = Queue()
     q.put(start)
-    memory = set()
+    infected = set()
     while not q.empty():
         node = q.get()
-        if node not in memory:
+        if node not in infected:
             print "Just infected", node
             g.users[node].site_version = 'new' # Expose infected user to new site
-            memory.add(node)
+            infected.add(node)
             for neighbor in g.get_neighbors(node):
                 q.put(neighbor)
+    return infected
 
 def build_graph(edge_file):
     '''
@@ -37,35 +38,25 @@ def build_graph(edge_file):
             g.add_edge(str(line[0]), str(line[1]),1)
     return g
 
-def visualize(list):
+def visualize(list, infected):
     '''
-    INPUT: Homespun Graph object (defined in user.py)
+    INPUT: Homespun Graph object (defined in user.py), list of infected users
     OUTPUT: image of network (PNG)
     '''
     G = nx.read_edgelist(list, delimiter=',')
-    plt.figure(figsize=(6,4))
-    nx.draw(G)
+    plt.figure(figsize=(6,6))
+    values = [1.0 if str(node) in infected else 0.0 for node in G.nodes()]
+    nx.draw(G, node_size=500, cmap=plt.get_cmap('rainbow'), node_color=values, font_size=6, font_family='sans-serif')
     plt.savefig('network_infection.png',format='PNG')
-    plt.show()
 
-    # plt.figure(figsize=(8,8))
-    # nx.draw_networkx_edges(G,pos,nodelist=[ncenter],alpha=0.4)
-    # nx.draw_networkx_nodes(G,pos,nodelist=p.keys(),
-    # node_size=80,
-    # node_color=p.values(),
-    # cmap=plt.cm.Reds_r)
 
-    # plt.xlim(-0.05,1.05)
-    # plt.ylim(-0.05,1.05)
-    # plt.axis('off')
-    # plt.savefig('random_geometric_graph.png')
-    # plt.show()
 
 if __name__ == '__main__':
     g = build_graph('edges.csv')
     users = g.users.keys()
     print "Users: ", users
-    first_user = raw_input("Please enter the name of the user to infect first: ")
+    #first_user = raw_input("Please enter the name of the user to infect first: ")
+    first_user = 'Tom'
     while first_user not in users:
         print "Oops, that's not a valid user. \nPlease choose from the following: ", users
         print "\n"    
@@ -73,5 +64,5 @@ if __name__ == '__main__':
     print "\n"
     print "Spreading the infection!"
     print "\n"
-    infect(g, first_user)
-    visualize('edges.csv')
+    infected = infect(g, first_user)
+    visualize('edges.csv', infected)
