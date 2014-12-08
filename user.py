@@ -1,11 +1,12 @@
 class User:
     '''
-    User class, representing a node in the coaching graph. Users are connected to graph neighbors via
-    coaching relationships, and have the attribute "site_version" 
+    User class, representing a Khan Academy user and node in the coaching graph. Users are connected to neighbors via
+    coaching relationships, and have an attribute "site_version" that indicates whether they will be exposed to a new feature.
+
     '''
     def __init__(self, name):
         self.name = name
-        self.site_version = None
+        self.site_version = 'old'
         self.neighbors = {}
 
     def add_neighbor(self, neighbor, weight):
@@ -15,6 +16,10 @@ class User:
         return self.neighbors.get(neighbor, None)
 
 class Graph:
+    '''
+    Coaching graph with Khan Academy users as nodes. Edges represent coaching relationships.
+
+    '''
     def __init__(self):
         self.users = {}
 
