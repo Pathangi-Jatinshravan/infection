@@ -52,7 +52,7 @@ def visualize(list, infected):
 
 
 if __name__ == '__main__':
-    g = build_graph('edges.csv')
+    g = build_graph('data/edges.csv')
     users = g.users.keys()
     print "Total infection:"
     print "Users: ", users
@@ -63,4 +63,4 @@ if __name__ == '__main__':
         first_user = raw_input("Please enter the name of the user to infect first: ")
     print "\nSpreading the infection! \n"
     infected = infect(g, first_user)
-    visualize('edges.csv', infected)
+    visualize('data/edges.csv', infected)
