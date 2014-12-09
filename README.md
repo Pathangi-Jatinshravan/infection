@@ -5,18 +5,18 @@ Khan Academy Infection Model
 
 1. Dependencies: If you do not already have `networkx` and the latest `matplotlib`, please install with `pip install networkx` and `pip install --upgrade matplotlib`.
 
-2. Run total infection: `python total_infection.py`. You will see a (fake) list of users and be prompted for the name of the first infection. 
+2. Run total and limited infection with `python total_infection.py` and `python limited_infection.py`, respectively. You will see a (fake) list of users and be prompted for the name of the first infection. Outputs a list of infected users and an image `network_infection.png`.
 
-3. Run limited infection with `python limited_infection.py`.
-
-4. Modify or append coaching relations in `edges.csv` and rerun for fun, *ad infinitum*.
+3. Modify or append coaching relations in `edges.csv` and `weighted_edges.csv` and rerun for fun, *ad infinitum*.
 
 
 ## EDA 
 
 KA is estimated to have 6 million users a month - what proportion of these are classroom-based vs. individual (uncoached) users?
 
-Is the coaching network 'small-world' or 'scale free'? Given a data on coaching relations, I would plot a histogram of node degree (number of links) across all users in the sample and determine whether it more closely follows a Poisson / power law / other distribution. This result would inform design choices for the limited infection model.
+Is the coaching network 'small-world' or 'scale free'?
+
+Given a data on coaching relations, I would plot a histogram of node degree (number of links) across all users in the sample and determine whether it more closely follows a Poisson / power law / other distribution. This result would inform design choices for the limited infection model.
 
 
 ## Part I: Infect
@@ -38,15 +38,15 @@ Given that the objective in the limited infection scheme is to minimize (but per
 
 Several of these weighting schemes are predicated on the availability of salient user information for the problem at hand.
 
--Total number of minutes spent on KA within the last X days/weeks/months for any given student-coach pair (to gauge whether the pair is active - targeting inactive users as stopping points for the infection minimizes the risk of a site version mismatch). This activity window could be determined by the average length of an A/B test.
+__Time weighting__: Total number of minutes spent on KA within the last X days/weeks/months for any given student-coach pair (to gauge whether the pair is active - targeting inactive users as stopping points for the infection minimizes the risk of a site version mismatch). This activity window should be scaled to the average length of an A/B test.
 
--Aggregate number of logins for a coach-student pair.
+__Aggregate number of logins__ for a coach-student pair.
 
 Logins * minutes spent on KA
 
 (Many logins but short visits are not as strong of an indicator of engagement and volume of use.)
 
--Interactions: weight edges by total hours spent *together* (affinity). That way, if two users are active independently but use the site together infrequently, it might be okay to stop the infection from spreading across that edge. (Fraction of total time spent on site during which user is working on an assigned playlist from a given coach.)
+__Affinity__: weight edges by total hours spent *together*. That way, if two users are active independently but use the site together infrequently, it might be okay to stop the infection from spreading across that edge. (Fraction of total time spent on site during which user is working on an assigned playlist from a given coach.)
 
 ## Ideas for extensions
 

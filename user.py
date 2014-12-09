@@ -12,7 +12,7 @@ class User:
     def add_neighbor(self, neighbor, weight):
         self.neighbors[neighbor] = weight
 
-    def get_weight(neighbor):
+    def get_weight(self, neighbor):
         return self.neighbors.get(neighbor, None)
 
 class Graph:

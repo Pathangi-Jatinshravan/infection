@@ -1,52 +1,68 @@
 from user import User, Graph
-from Queue import Queue, LifoQueue
+from Queue import Queue
 import networkx as nx
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 def infect(g, start):
     '''
     INPUTS: pre-infection Graph object, User object
-    OUTPUT: list of 'infected' users (total infection, no stopping points)
+    OUTPUT: set of 'infected' users
+    
+    Infects connected portion of user graph with new site.
     '''
     q = Queue()
     q.put(start)
-    v_set = set()
+    infected = set()
     while not q.empty():
         node = q.get()
-        if node not in v_set:
-            print "Just infected ", node
-            v_set.add(node)
+        if node not in infected:
+            print "Just infected", node
+            g.users[node].site_version = 'new' # Expose infected user to new site
+            infected.add(node)
             for neighbor in g.get_neighbors(node):
                 q.put(neighbor)
+    return infected
 
-def build_graph():
+def build_graph(edge_file):
     '''
     INPUT: None
     OUTPUT: Graph object
 
-    Constructs a graph object edge by edge
+    Reads in edgelist and constructs Graph object edge by edge (edge weights equal for total infection)
     '''
     g = Graph()
-    g.add_edge('Tom', 'Mary', 1)
-    g.add_edge('Tom', 'Jen', 1)
-    g.add_edge('Mary', 'Jerry', 1)
-    g.add_edge('Jen', 'Fido', 1)
-    g.add_edge('Lassie', 'Jen', 1)
+    with open(edge_file) as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.strip().split(',')
+            g.add_edge(str(line[0]), str(line[1]),1)
     return g
 
-def visualize(list):
+def visualize(list, infected):
     '''
-    INPUT: Homespun Graph object (defined in user.py)
+    INPUT: Homespun Graph object (defined in user.py), list of infected users
     OUTPUT: image of network (PNG)
     '''
-    G = nx.read_edgelist(list, delimiter=' ', create_using=nx.DiGraph())
-    plt.figure(figsize(6,4))
-    nx.draw(G)
+    G = nx.read_edgelist(list, delimiter=',')
+    plt.figure(figsize=(6,6))
+    values = [1.0 if str(node) in infected else 0.0 for node in G.nodes()]
+    nx.draw(G, node_size=500, cmap=plt.get_cmap('rainbow'), node_color=values, font_size=6, font_family='sans-serif')
+    plt.savefig('network_infection.png',format='PNG')
+
 
 
 if __name__ == '__main__':
-    g = build_graph()
-    print "Users: ", [u for u in g.users]
+    g = build_graph('edges.csv')
+    users = g.users.keys()
+    print "Total infection:"
+    print "Users: ", users
+    first_user = raw_input("Please enter the name of the user to infect first: ")
+    while first_user not in users:
+        print "Oops, that's not a valid user. \nPlease choose from the following: ", users
+        print "\n"    
+        first_user = raw_input("Please enter the name of the user to infect first: ")
+    print "\n"
     print "Spreading the infection!"
-    infect(g, 'Tom')
+    print "\n"
+    infected = infect(g, first_user)
+    visualize('edges.csv', infected)

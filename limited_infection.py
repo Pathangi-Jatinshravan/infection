@@ -20,7 +20,6 @@ def infect(g, start, threshold):
             g.users[node].site_version = 'new' # Expose infected user to new site
             infected.add(node)
             for neighbor in g.get_neighbors(node):
-                print neighbor, type(neighbor)
                 if g.users[node].get_weight(neighbor) > threshold:
                     q.put(neighbor)
     return infected
@@ -57,8 +56,7 @@ if __name__ == '__main__':
     users = g.users.keys()
     print "Limited infection:"
     print "Users: ", users
-    #first_user = raw_input("Please enter the name of the user to infect first: ")
-    first_user = 'Tom'
+    first_user = raw_input("Please enter the name of the user to infect first: ")
     while first_user not in users:
         print "Oops, that's not a valid user. \nPlease choose from the following: ", users
         print "\n"    
