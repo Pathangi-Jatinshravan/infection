@@ -61,8 +61,6 @@ if __name__ == '__main__':
         print "Oops, that's not a valid user. \nPlease choose from the following: ", users
         print "\n"    
         first_user = raw_input("Please enter the name of the user to infect first: ")
-    print "\n"
-    print "Spreading the infection!"
-    print "\n"
+    print "\nSpreading the infection! \n"
     infected = infect(g, first_user, 5)
     visualize('edges.csv', infected)
