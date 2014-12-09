@@ -16,7 +16,7 @@ KA is estimated to have 6 million users a month - what proportion of these are c
 
 Is the coaching network 'small-world' or 'scale free'?
 
-Given a data on coaching relations, I would plot a histogram of node degree (number of links) across all users in the sample and determine whether it more closely follows a Poisson / power law / other distribution. This result would inform design choices for the limited infection model.
+Given data on coaching relations, I would plot a histogram of node degree (number of links) across all users in the sample and determine whether it more closely follows a Poisson / power law / other distribution. This result would inform design choices for the limited infection model.
 
 
 ## Part I: Infect
