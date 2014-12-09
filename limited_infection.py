@@ -3,7 +3,7 @@ from Queue import Queue
 import networkx as nx
 import matplotlib.pyplot as plt
 
-def infect(g, start):
+def infect(g, start, threshold):
     '''
     INPUTS: pre-infection Graph object, User object
     OUTPUT: set of 'infected' users, limited by edge weighting (see README)
@@ -20,7 +20,9 @@ def infect(g, start):
             g.users[node].site_version = 'new' # Expose infected user to new site
             infected.add(node)
             for neighbor in g.get_neighbors(node):
-                q.put(neighbor)
+                print neighbor, type(neighbor)
+                if g.users[node].get_weight(neighbor) > threshold:
+                    q.put(neighbor)
     return infected
 
 def build_graph(edge_file):
@@ -35,7 +37,7 @@ def build_graph(edge_file):
         lines = f.readlines()
         for line in lines:
             line = line.strip().split(',')
-            g.add_edge(str(line[0]), str(line[1]),1)
+            g.add_edge(str(line[0]), str(line[1]), float(line[2]))
     return g
 
 def visualize(list, infected):
@@ -47,14 +49,13 @@ def visualize(list, infected):
     plt.figure(figsize=(6,6))
     values = [1.0 if str(node) in infected else 0.0 for node in G.nodes()]
     nx.draw(G, node_size=500, cmap=plt.get_cmap('rainbow'), node_color=values, font_size=6, font_family='sans-serif')
-    plt.legend()
     plt.savefig('network_infection.png',format='PNG')
 
 
-
 if __name__ == '__main__':
-    g = build_graph('edges.csv')
+    g = build_graph('weighted_edges.csv')
     users = g.users.keys()
+    print "Limited infection:"
     print "Users: ", users
     #first_user = raw_input("Please enter the name of the user to infect first: ")
     first_user = 'Tom'
@@ -65,5 +66,5 @@ if __name__ == '__main__':
     print "\n"
     print "Spreading the infection!"
     print "\n"
-    infected = infect(g, first_user)
+    infected = infect(g, first_user, 5)
     visualize('edges.csv', infected)
